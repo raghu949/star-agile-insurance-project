@@ -1,6 +1,6 @@
 - name : Configure Docker on EC2 Instances
   hosts : all
-  #become: true
+  become: true
   #connection : ssh
   tasks : 
   - name: updating apt
@@ -8,12 +8,12 @@
 
   - name : Install Docker
     command : sudo apt-get install -y docker.io
-    #become : yes
+    become : yes
     #become_user : root
 
   - name : Start Docker Service
     command : sudo systemctl start docker
-    #become : yes
+    become : yes
     #become_user : root
 
   - name: Deploy Docker Container
