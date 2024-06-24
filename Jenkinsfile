@@ -38,27 +38,9 @@ node{
     stage('publish test reports'){
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/Capstone-Project-Live-Demo/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
     }
-    
-    stage('Containerize the application'){
-        echo 'Creating Docker image'
-        sh "${dockerCMD} build -t rampracticedocker/insure-me:${tagName} ."
-    }
-    
-    stage('Pushing it ot the DockerHub'){
-        echo 'Pushing the docker image to DockerHub'
-        withCredentials([string(credentialsId: 'dock-password', variable: 'dockerHubPassword')]) {
-        sh "${dockerCMD} login -u raghurama2@gmail.com -p ${dockerHubPassword}"
-        sh "${dockerCMD} push rampracticedocker/insure-me:${tagName}"
-            
-        }
-        
-    stage('Configure and Deploy to the test-server'){
-        ansiblePlaybook become: true, credentialsId: 'ansible-key', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml'
-    }
-        
         
     }
-}
+
 
 
 
