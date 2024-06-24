@@ -34,7 +34,10 @@ node{
         //sh 'mvn clean package'
         sh "${mavenCMD} clean package"        
     }
-    
+    stage('Containerize the application'){
+        echo 'Creating Docker image'
+        sh "${dockerCMD} build -t rampracticedocker/insure-me:${tagName} ."
+    }
  
         
     }
