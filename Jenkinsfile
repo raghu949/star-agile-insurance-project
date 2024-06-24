@@ -10,8 +10,8 @@ node{
         echo 'initialize all the variables'
         mavenHome = tool name: 'maven' , type: 'maven'
         mavenCMD = "${mavenHome}/bin/mvn"
-        docker = tool name: 'docker' , type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-        dockerCMD = "${docker}/bin/docker"
+        #docker = tool name: 'docker' , type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+        #dockerCMD = "${docker}/bin/docker"
         tagName="3.0"
     }
     
@@ -36,9 +36,15 @@ node{
     }
     stage('Containerize the application'){
         echo 'Creating Docker image'
-        sh "${dockerCMD} build -t rampracticedocker/insure-me:${tagName} ."
+        sh "docker build -t rampracticedocker/insure-me:${tagName} ."
     }
- 
+     stage('Pushing it ot the DockerHub'){
+        echo 'Pushing the docker image to DockerHub'
+        withCredentials([string(credentialsId: 'dock-password', variable: 'dockerHubPassword')]) {
+        sh "docker login -u raghurama2@gmail.com -p ${dockerHubPassword}"
+        sh "docker push rampracticedocker/insure-me:${tagName}"
+            
+        }
         
     }
 
