@@ -11,7 +11,7 @@ node{
         mavenHome = tool name: 'maven' , type: 'maven'
         mavenCMD = "${mavenHome}/bin/mvn"
         
-        tagName="4.0"
+        tagName="5.0"
     }
     
     stage('git code checkout'){
