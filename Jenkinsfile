@@ -11,7 +11,7 @@ node{
         mavenHome = tool name: 'maven' , type: 'maven'
         mavenCMD = "${mavenHome}/bin/mvn"
         
-        tagName="3.0"
+        tagName="4.0"
     }
     
     stage('git code checkout'){
@@ -46,7 +46,8 @@ node{
         }
         
     }stage('Configure and Deploy to the test-server'){
-        ansiblePlaybook become: true, credentialsId: 'ansible-key', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml'
+        
+         ansiblePlaybook become: true, credentialsId: 'ansible-key', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml', vaultTmpPath: ''
     }
     
 }
